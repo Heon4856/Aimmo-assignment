@@ -2,12 +2,10 @@ from db import db
 
 
 class Post(db.Document):
-    id = db.IntegerField()
-    subject = db.Stringfield()
-    content = db.Stringfield()
+    title = db.StringField()
+    content = db.StringField()
 
 
 class User(db.Document):
-    id = db.IntegerField()
     name = db.StringField()
     email = db.StringField()
