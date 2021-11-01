@@ -2,10 +2,13 @@ from db import db
 
 
 class Post(db.Document):
-    title = db.StringField()
-    content = db.StringField()
+    title = db.StringField(required=True)
+    content = db.StringField(required=True)
+    create_date = db.DateTimeField(required=True)
+    modify_date = db.DateTimeField()
 
 
 class User(db.Document):
     name = db.StringField()
     password = db.StringField()
+    signup_date = db.DateTimeField(required=True)
