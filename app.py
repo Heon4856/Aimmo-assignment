@@ -6,9 +6,9 @@ def create_app():
     app = Flask(__name__)
     app.config['MONGODB_SETTINGS'] = {'db': ':myapp'}
 
-    from views import main_views
+    from views import post_views
 
-    app.register_blueprint(main_views.bp)
+    app.register_blueprint(post_views.bp)
 
     return app
 
