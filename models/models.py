@@ -9,6 +9,12 @@ class Post(db.Document):
     user = db.ReferenceField('User')
     hits = db.IntField(required=True)
 
+    meta = {
+        'indexes': [
+            {'fields' : ['$title']
+             }
+        ]
+    }
 
 class User(db.Document):
     name = db.StringField()
