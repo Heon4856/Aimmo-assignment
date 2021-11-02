@@ -1,3 +1,4 @@
+from bson.json_util import dumps
 from models.models import Post
 
 
@@ -24,3 +25,7 @@ def delete(id, current_user):
 def hit(id):
     post = Post.objects.get_or_404(id=id)
     post.update(hits=post.hits+1)
+
+
+def search(keyword):
+    post = Post.objects.search_text(keyword)

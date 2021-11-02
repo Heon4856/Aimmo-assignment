@@ -35,3 +35,5 @@ def count_hit_post(id, request, current_user):
     return cookie_value, max_age
 
 
+def search_keyword(keyword):
+    return post_repository.search(keyword)
