@@ -1,13 +1,21 @@
 from repository import post_repository
 from datetime import datetime
+from flask import jsonify
 
 
 def read_post_list(page):
-    return post_repository.read_post_list(page)
+    post_list = post_repository.read_post_list(page)
+    temp_post_list = []
+    for post in post_list.items:
+        temp_post_list.append(
+            dict(_id=str(post.id), title=post.title, content=post.content, create_date=post.create_date, user=post.user,
+                    modify_date=post.modify_date))
+    return temp_post_list
 
 
 def read_post_detail(id):
-    return post_repository.read_post_detail(id)
+    post_data = post_repository.read_post_detail(id)
+    return post_data.to_json()
 
 
 def create_post(title, content, current_user_id):
