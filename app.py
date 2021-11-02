@@ -1,10 +1,14 @@
 from flask import Flask
 from db import initialize_db
-
+from flask_jwt_extended import JWTManager
 
 def create_app():
     app = Flask(__name__)
     app.config['MONGODB_SETTINGS'] = {'db': ':myapp'}
+    app.config['JWT_SECRET_KEY'] = "secret"
+
+    # jwt
+    jwt = JWTManager(app)
 
     from views import post_views, auth_views
 
