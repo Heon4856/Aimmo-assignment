@@ -30,7 +30,7 @@ def read_post_list():
 
 @bp.route('/posts/<id>', methods=['GET'])
 def read_detail(id):
-    cookie_value, max_age = post_service.count_hit_post(id, request, "test123457")
+    cookie_value, max_age = post_service.count_hit_post(id, request)
     post = post_service.read_post_detail(id)
     response = make_response(jsonify(post))
     response.set_cookie('hitboard', value=cookie_value, max_age=max_age, httponly=True)
