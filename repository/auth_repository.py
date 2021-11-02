@@ -4,8 +4,6 @@ from werkzeug.security import check_password_hash
 
 def signup(name, hashed_password, signup_date):
     user = User(name=name, password=hashed_password, signup_date=signup_date).save()
-    print(hashed_password)
-    print(user.password)
     id = user.id
     return id
 
