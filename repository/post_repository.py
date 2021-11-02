@@ -8,7 +8,6 @@ def read_post_list(page, tags):
 
 def read_post_detail(id):
     post = Post.objects.get_or_404(id=id)
-    post.reply.objects.paginate(page=1, per_page=2)
     return post
 
 
