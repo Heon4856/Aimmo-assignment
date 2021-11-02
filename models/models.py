@@ -21,3 +21,11 @@ class User(db.Document):
     name = db.StringField()
     password = db.StringField()
     signup_date = db.DateTimeField(required=True)
+
+
+class Comment(db.Document):
+    content = db.StringField(required=True)
+    create_date = db.DateTimeField(required=True)
+    user_id = db.StringField(required=True)
+    post_id = db.StringField(required=True)
+    parent_comment_id = db.StringField()
