@@ -55,7 +55,8 @@
 | PATCH, PUT  | /posts<post_id> |         | title, content | 게시글 수정     |
 | DELETE | /posts/<post_id> |         |               | 게시글 삭제 |
 | GET | /lists |  keyword  |         | 게시글 검색 |
-         
+| POST | /posts/<post_id>/comment_create |    | oid | 댓글 생성 |  
+| DELETE | /posts/<post_id> |    |         | 댓글 삭제 |
 
 ## API 명세
 **1. 회원가입**
