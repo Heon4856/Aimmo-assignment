@@ -2,9 +2,7 @@ from models.models import Post
 
 
 def read_post_list(page):
-    items_per_page = 10
-    offset = (page - 1) * items_per_page
-    post_list = Post.objects.skip(offset).limit(items_per_page)
+    post_list = Post.objects.paginate(page=page, per_page=10)
     return post_list
 
 
