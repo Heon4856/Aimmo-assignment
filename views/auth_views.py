@@ -1,6 +1,6 @@
 from flask import Blueprint, jsonify, make_response, request
-from models.models import User
 from service import auth_service
+
 
 bp = Blueprint('auth', __name__, url_prefix='/auth')
 
