@@ -2,8 +2,8 @@ from repository import post_repository
 from datetime import timedelta,datetime
 import re
 
-def read_post_list(page):
-    post_list = post_repository.read_post_list(page)
+def read_post_list(page,tags):
+    post_list = post_repository.read_post_list(page,tags)
     temp_post_list = []
     for post in post_list.items:
         temp_post_list.append(
@@ -17,9 +17,9 @@ def read_post_detail(id):
     return post_data.to_json()
 
 
-def create_post(title, content, current_user_id):
+def create_post(title, content, current_user_id,tags):
     date = datetime.now()
-    return post_repository.create(title, content, date, current_user_id)
+    return post_repository.create(title, content, date, current_user_id,tags)
 
 
 def update_post(id, title, content, current_user_id):
@@ -42,9 +42,9 @@ def count_hit_post(id, request, current_user):
     return cookie_value, max_age
 
 
-def search_keyword(keyword):
+def search_keyword(keyword,tags):
     regex = re.compile('.*' + keyword + '*')
-    return post_repository.search(regex)
+    return post_repository.search(regex,tags)
 
 
 def delete_post_if_user_authorized(id, current_user_id):
