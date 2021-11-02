@@ -20,12 +20,12 @@ def read_post_detail(id):
 
 def create_post(title, content, current_user_id, tags):
     date = datetime.now()
-    return post_repository.create(title, content, date, current_user_id, tags)
+    return post_repository.create_post(title, content, date, current_user_id, tags)
 
 
 def update_post(id, title, content, current_user_id):
     modify_date = datetime.now()
-    return post_repository.modify(id, title, content, modify_date, current_user_id)
+    return post_repository.modify_post(id, title, content, modify_date, current_user_id)
 
 
 def count_hit_post(id, request):
@@ -38,15 +38,27 @@ def count_hit_post(id, request):
 
     cookie_value = request.cookies.get('hitboard', '_')
     if f'{id}' not in cookie_value:
-        post_repository.hit(id)
+        post_repository.hit_post(id)
         cookie_value += f'{id}_'
     return cookie_value, max_age
 
 
 def search_keyword(keyword, tags):
     regex = re.compile('.*' + keyword + '*')
-    return post_repository.search(regex, tags)
+    return post_repository.search_post(regex, tags)
 
 
 def delete_post_if_user_authorized(id, current_user_id):
-    return post_repository.delete(id, current_user_id)
+    return post_repository.delete_post(id, current_user_id)
+
+
+def create_comment_service(comment_info):
+    comment_info['create_date'] = datetime.now()
+    if 'oid' in comment_info:
+        return post_repository.create_child_comment_repository(comment_info)
+    return post_repository.create_parent_comment_repository(comment_info)
+
+
+def delete_comment_service(delete_commnet_info):
+    comment_id = post_repository.search_commnet_repository(delete_commnet_info)
+    return post_repository.delete_comment_repository(comment_id)
