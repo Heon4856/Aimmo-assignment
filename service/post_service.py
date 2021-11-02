@@ -1,6 +1,6 @@
 from repository import post_repository
 from datetime import timedelta,datetime
-
+import re
 
 def read_post_list(page):
     post_list = post_repository.read_post_list(page)
@@ -43,7 +43,8 @@ def count_hit_post(id, request, current_user):
 
 
 def search_keyword(keyword):
-    return post_repository.search(keyword)
+    regex = re.compile('.*' + keyword + '*')
+    return post_repository.search(regex)
 
 
 def delete_post_if_user_authorized(id, current_user_id):

@@ -35,6 +35,7 @@ def read_detail(id):
     response.set_cookie('hitboard', value=cookie_value, max_age=max_age, httponly=True)
     return response
 
+
 @bp.route('/posts/<id>', methods=['PUT', 'PATCH'])
 @jwt_required()
 def update(id):
@@ -57,5 +58,5 @@ def delete(id):
 @bp.route('/lists', methods=['GET'])
 def search():
     keyword = request.args.get('keyword')
-    post_service.search_keyword(keyword)
-    return "1234"
+    posts = post_service.search_keyword(keyword).to_json()
+    return make_response(posts, 200)

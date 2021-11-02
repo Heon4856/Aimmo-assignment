@@ -38,4 +38,5 @@ def hit(id):
 
 
 def search(keyword):
-    post = Post.objects.search_text(keyword)
+    post = Post.objects(title=keyword)
+    return post
