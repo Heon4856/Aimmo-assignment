@@ -1,6 +1,13 @@
 from models.models import Post
 
 
+def read_post_list(page):
+    items_per_page = 10
+    offset = (page - 1) * items_per_page
+    post_list = Post.objects.skip(offset).limit(items_per_page)
+    return post_list
+
+
 def read_post_detail(id):
     return Post.objects.get_or_404(id=id)
 
