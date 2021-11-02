@@ -31,10 +31,9 @@ class TestCase(unittest.TestCase):
              signup_date=datetime.now()).save()
         for i in range(20):
             post = Post(title="subject{}".format(i), content="content", create_date=datetime.now(),
-                        user=str(authorized_user.id)).save()
+                        user=str(authorized_user.id), hits=0).save()
         global post_id
         post_id = str(post.id)
-        print(post_id)
 
     def get_authorized_access_token(self):
         """권한있는 게시자의 access_token을 get반환하는 함수"""
@@ -53,12 +52,10 @@ class TestCase(unittest.TestCase):
         return access_token
 
     def test_get_post_list(self):
-        """get_post_list시 200상태코드와 10개의 게시글을 반환"""
+        """get_post_list시 200상태코드를 반환"""
         url = '/posts'
         response = self.client.get(url)
         assert 200 == response.status_code
-        assert 10 == len(response.get_json())
-
 
     def test_detail_api_with_exited_post_id(self):
         """존재하는 게시글 식별자로 get요청시 200상태코드반환"""
@@ -75,7 +72,7 @@ class TestCase(unittest.TestCase):
     def test_post_with_access_token(self):
         """로그인된채로 글을 post요청시 201상태코드 반환"""
         access_token = self.get_authorized_access_token()
-        test_data2 = {"title": "test3", "content": "test"}
+        test_data2 = {"title": "test3", "content": "test", "tags": ['test']}
         rv = self.client.post('/create', data=json.dumps(test_data2), content_type='application/json',
                               headers={"Authorization": "Bearer {}".format(access_token)})
 
@@ -95,38 +92,39 @@ class TestCase(unittest.TestCase):
         rv = self.client.patch('/posts/{}'.format(post_id), data=json.dumps(test_data2),
                                content_type='application/json',
                                headers={"Authorization": "Bearer {}".format(access_token)})
-        print(rv.status_code)
         assert 200 == rv.status_code
 
     def test_modify_with_unauthrorized_user(self):
         """권한없는 유저가 수정요청시 401 상태코드를 반환"""
         access_token = self.get_unauthorized_access_token()
         test_data2 = {"title": "modify", "content": "test"}
-        rv = self.client.patch('/posts/{}'.format(post_id), data=json.dumps(test_data2), content_type='application/json',
+        rv = self.client.patch('/posts/{}'.format(post_id), data=json.dumps(test_data2),
+                               content_type='application/json',
                                headers={"Authorization": "Bearer {}".format(access_token)})
         assert 401 == rv.status_code
 
     def test_modify_not_existed_post(self):
         """존재하지 않는 게시글에 대한 수정 요청시 404 상태코드를 반환"""
         access_token = self.get_authorized_access_token()
-        test_data2 = {"title": "modify", "content": "test"}
+        test_data2 = {"title": "modify", "content": "test", 'tags': ["test"]}
         self.client.delete('/posts/{}'.format(post_id), headers={"Authorization": "Bearer {}".format(access_token)})
-        rv = self.client.patch('/posts/{}'.format(post_id), data=json.dumps(test_data2), content_type='application/json',
+        rv = self.client.patch('/posts/{}'.format(post_id), data=json.dumps(test_data2),
+                               content_type='application/json',
                                headers={"Authorization": "Bearer {}".format(access_token)})
-        print(rv.status_code)
         assert 404 == rv.status_code
 
     def test_delete_with_authorized_user(self):
         """권한있는 유저가 삭제요청시 204 상태코드를 반환"""
         access_token = self.get_authorized_access_token()
-        rv = self.client.delete('/posts/{}'.format(post_id), headers={"Authorization": "Bearer {}".format(access_token)})
+        rv = self.client.delete('/posts/{}'.format(post_id),
+                                headers={"Authorization": "Bearer {}".format(access_token)})
         assert 204 == rv.status_code
 
     def test_delete_with_unauthorized_user(self):
         """권한없는 유저가 삭제요청시 401 상태코드를 반환"""
         access_token = self.get_unauthorized_access_token()
-        rv = self.client.delete('/posts/{}'.format(post_id), headers={"Authorization": "Bearer {}".format(access_token)})
-        print(rv.status_code)
+        rv = self.client.delete('/posts/{}'.format(post_id),
+                                headers={"Authorization": "Bearer {}".format(access_token)})
         assert 401 == rv.status_code
 
     def test_delete_with_not_exist_post(self):
