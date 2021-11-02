@@ -39,7 +39,7 @@ def update(id):
     current_user_id = get_jwt_identity()
     body = request.get_json()
     if post_service.update_post(id, body["title"], body["content"], current_user_id):
-        return make_response(jsonify(msg='update_success', status_code=201, id=str(id)), 201)
+        return make_response(jsonify(msg='update_success', status_code=200, id=str(id)), 200)
     return make_response(jsonify(msg="권한이 없습니다. 해당 글을 쓰신 유저가 맞는지 확인해주세요", status_code=401), 401)
 
 
