@@ -29,8 +29,11 @@ def read_post_list():
 
 @bp.route('/posts/<id>', methods=['GET'])
 def read_detail(id):
+    cookie_value, max_age = post_service.count_hit_post(id, request, "test123457")
     post = post_service.read_post_detail(id)
-    return make_response(jsonify(post))
+    response = make_response(jsonify(post))
+    response.set_cookie('hitboard', value=cookie_value, max_age=max_age, httponly=True)
+    return response
 
 
 @bp.route('/posts/<id>', methods=['PUT', 'PATCH'])
@@ -50,3 +53,10 @@ def delete(id):
     if post_service.delete_post_if_user_authorized(id, current_user_id):
         return make_response('', 204)
     return make_response(jsonify(msg="권한이 없습니다. 해당 글을 쓰신 유저가 맞는지 확인해주세요.", status_code=401), 401)
+
+
+@bp.route('/lists', methods=['GET'])
+def search():
+    keyword = request.args.get('keyword')
+    posts = post_service.search_keyword(keyword).to_json()
+    return make_response(posts, 200)

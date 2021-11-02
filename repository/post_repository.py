@@ -11,7 +11,7 @@ def read_post_detail(id):
 
 
 def create(title, content, date, current_user_id):
-    post = Post(title=title, content=content, create_date=date, user=current_user_id).save()
+    post = Post(title=title, content=content, create_date=date, user=current_user_id, hits=0).save()
     id = post.id
     return id
 
@@ -30,3 +30,13 @@ def delete(id, current_user_id):
         post.delete()
         return True
     return False
+
+
+def hit(id):
+    post = Post.objects.get_or_404(id=id)
+    post.update(hits=post.hits+1)
+
+
+def search(keyword):
+    post = Post.objects(title=keyword)
+    return post

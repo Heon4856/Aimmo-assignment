@@ -6,8 +6,15 @@ class Post(db.Document):
     content = db.StringField(required=True)
     create_date = db.DateTimeField(required=True)
     modify_date = db.DateTimeField()
+    hits = db.IntField(required=True)
     user = db.StringField(required=True)
 
+    meta = {
+        'indexes': [
+            {'fields' : ['$title']
+             }
+        ]
+    }
 
 class User(db.Document):
     name = db.StringField()
