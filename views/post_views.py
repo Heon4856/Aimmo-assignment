@@ -14,15 +14,17 @@ def hello_world():
 @bp.route('/create', methods=['POST'])
 def create():
     body = request.get_json()
-    id = post_service.create_post(body["title"], body["content"])
+    id = post_service.create_post(body["title"], body["content"], 'name')
     return make_response(jsonify(msg='success', status_code=201, id=str(id)), 201)
 
 
 @bp.route('/posts/<id>', methods=['GET'])
 def read(id):
     post=post_service.read_post_detail(id)
-    return make_response(jsonify(post))
-
+    cookie_value, max_age = post_service.hit_post(id, request,"test12345")
+    response = make_response(jsonify(post))
+    response.set_cookie('hitboard', value = cookie_value, max_age=max_age, httponly=True)
+    return response
 
 @bp.route('/posts/<id>', methods=['PUT', 'PATCH'])
 def update(id):
