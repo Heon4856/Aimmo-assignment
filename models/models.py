@@ -6,6 +6,7 @@ class Post(db.Document):
     content = db.StringField(required=True)
     create_date = db.DateTimeField(required=True)
     modify_date = db.DateTimeField()
+    user = db.ReferenceField('User')
 
 
 class User(db.Document):
