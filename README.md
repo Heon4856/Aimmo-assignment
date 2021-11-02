@@ -3,6 +3,36 @@
 ## 사용한 기술 스택
 - python flask, mongoengine, mongodb
 
+## 환경 구축
+
+```bash
+#윈도우
+python -m venv venv
+
+source venv/Scripts/activate
+
+pip install -r requirements.txt
+```
+
+```bash
+#맥
+python -m venv venv
+
+source venv/bin/activate
+
+pip install -r requirements.txt
+```
+```
+
+```shell
+flask run
+```
+
+유닛테스트 실행
+```shell
+python -m unittest
+```
+
 ## 구현 내용 
 - 게시글 카테고리  
 - 게시글 검색  
@@ -10,13 +40,26 @@
 - 게시글 읽힘 수  
 - Unit Test  
 
+## 수행하지 못한 것  
+
+### 배포  
+- AWS를 이용해 배포를 시도하였고, host를 외부에서도 사용 가능하게 0.0.0.0으로 지정했으나, 내부 wi-fi ip주소로 자꾸 서버가 Open이 되는 상황이 발생하였습니다.  
+- 5시간 동안 배포 방법도 바꾸고 스택오버플로우도 뒤져봤지만 마땅한 해결책이 나오지 않아 배포에 실패했습니다.  
+
+### 문제의 ip  
+
+![image](https://user-images.githubusercontent.com/32921115/139961256-68888b54-6aaa-4c79-b239-3c7cf4141f06.png)
+- 0.0.0.0, 5000으로 지정한 코드.
+
+![image](https://user-images.githubusercontent.com/32921115/139961333-8e23578b-d46e-400e-873e-c248eedc047a.png)
+- 위와 같이 지정해도 local ip주소로 서버가 Open된 사진  
 
 ## 팀원과 맡은 역할    
 - 강대훈 : 게시글 읽힘 수, 게시글 검색 
 - 송빈호 : 댓글 모델 작성, 대댓글 pagination  
 - 정성헌 : 회원가입, 로그인, 게시판 CRUD, 카테고리, 유닛테스트  
  
- 
+
 ## 구현 방법
 #### 회원가입
 - 사용자로부터 이름, 비밀번호를 받습니다.
