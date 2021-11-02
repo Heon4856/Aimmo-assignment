@@ -6,8 +6,8 @@ class Post(db.Document):
     content = db.StringField(required=True)
     create_date = db.DateTimeField(required=True)
     modify_date = db.DateTimeField()
-    user = db.ReferenceField('User')
     hits = db.IntField(required=True)
+    user = db.StringField(required=True)
 
     meta = {
         'indexes': [
