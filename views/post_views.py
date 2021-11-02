@@ -22,7 +22,7 @@ def create():
 
 
 @bp.route('/posts/<id>', methods=['GET'])
-def read(id):
+def read_detail(id):
     post = post_service.read_post_detail(id)
     return make_response(jsonify(post))
 
