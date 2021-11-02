@@ -1,8 +1,8 @@
 from models.models import Post
 
 
-def read_post_list(page):
-    post_list = Post.objects.paginate(page=page, per_page=10)
+def read_post_list(page, tags):
+    post_list = Post.objects(tags=tags).paginate(page=page, per_page=10)
     return post_list
 
 
@@ -10,8 +10,10 @@ def read_post_detail(id):
     return Post.objects.get_or_404(id=id)
 
 
-def create(title, content, date, current_user_id):
-    post = Post(title=title, content=content, create_date=date, user=current_user_id, hits=0).save()
+def create(title, content, date, current_user_id, tags):
+    post = Post(title=title, content=content, create_date=date, user=current_user_id, hits=0)
+    post.tags = tags
+    post.save()
     id = post.id
     return id
 
@@ -34,9 +36,9 @@ def delete(id, current_user_id):
 
 def hit(id):
     post = Post.objects.get_or_404(id=id)
-    post.update(hits=post.hits+1)
+    post.update(hits=post.hits + 1)
 
 
-def search(keyword):
-    post = Post.objects(title=keyword)
+def search(keyword, tags):
+    post = Post.objects(title=keyword, tags=tags)
     return post

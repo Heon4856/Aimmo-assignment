@@ -16,14 +16,15 @@ def hello_world():
 def create():
     current_user_id = get_jwt_identity()
     body = request.get_json()
-    id = post_service.create_post(body["title"], body["content"], current_user_id)
+    id = post_service.create_post(body["title"], body["content"], current_user_id, body["tags"])
     return make_response(jsonify(msg='success', status_code=201, id=str(id)), 201)
 
 
 @bp.route('/posts', methods=['GET'])
 def read_post_list():
     page = request.args.get('page', type=int, default=1)
-    post_list = post_service.read_post_list(page)
+    tags = request.args.get('tags')
+    post_list = post_service.read_post_list(page, tags)
     return make_response(jsonify(post_list))
 
 
@@ -58,5 +59,6 @@ def delete(id):
 @bp.route('/lists', methods=['GET'])
 def search():
     keyword = request.args.get('keyword')
-    posts = post_service.search_keyword(keyword).to_json()
+    tags = request.args.get('tags')
+    posts = post_service.search_keyword(keyword, tags).to_json()
     return make_response(posts, 200)
