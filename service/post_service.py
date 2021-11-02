@@ -54,7 +54,7 @@ def delete_post_if_user_authorized(id, current_user_id):
 
 def create_comment_service(comment_info):
     comment_info['create_date'] = datetime.now()
-    if 'parent_comment_id' in comment_info:
+    if 'oid' in comment_info:
         return post_repository.create_child_comment_repository(comment_info)
     return post_repository.create_parent_comment_repository(comment_info)
 
@@ -62,7 +62,3 @@ def create_comment_service(comment_info):
 def delete_comment_service(delete_commnet_info):
     comment_id = post_repository.search_commnet_repository(delete_commnet_info)
     return post_repository.delete_comment_repository(comment_id)
-    # if comment:
-    #     comment_list = post_repository.search_child_comment_repository(comment.id)
-    #     for child in comment_list:
-    #         post_repository.delete_comment(child.id)

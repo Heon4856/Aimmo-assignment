@@ -75,8 +75,8 @@ def create_comment(post_id):
         'post_id' : post_id,
         'content' : body['content'],
     }
-    if 'comment_id' in body:
-        create_comment_info['comment_id'] = body['comment_id']
+    if 'oid' in body:
+        create_comment_info['oid'] = body['oid']
     post_service.create_comment_service(create_comment_info)
     return make_response(jsonify(msg='create_comment_success', status_code=201, id=str(id)), 201)
 
@@ -90,7 +90,7 @@ def delete_comment():
     delete_comment_info = {
         'user_id' : user_id,
         'post_id' : post_id,
-        'parent_comment_id' : comment_id
+        'oid' : comment_id
     }
     post_service.delete_comment_service(delete_comment_info)
     return make_response(jsonify(msg='delete_comment_success', status_code=201, id=str(id)), 201)

@@ -1,4 +1,4 @@
-from models.models import Comment, Post
+from models.models import Comment, Post, ChildComment
 
 
 def read_post_list(page, tags):
@@ -7,7 +7,9 @@ def read_post_list(page, tags):
 
 
 def read_post_detail(id):
-    return Post.objects.get_or_404(id=id)
+    post = Post.objects.get_or_404(id=id)
+    post.reply.objects.paginate(page=1, per_page=2)
+    return post
 
 
 
@@ -45,23 +47,22 @@ def search_post(keyword, tags):
     return post
 
 
-
 def create_child_comment_repository(create_comment_info):
-    post = Comment(content=create_comment_info['content'], create_date=create_comment_info['create_date'], user_id=create_comment_info['user_id'],\
-                post_id=create_comment_info['post_id'], parent_comment_id=create_comment_info['parent_commnet_id'])
+    post = Post.objects.get_or_404(id=create_comment_info['post_id'])
+    child_comment = ChildComment(content=create_comment_info['content'], create_date=create_comment_info['create_date'], user_id=create_comment_info['user_id'],\
+                post_id=create_comment_info['post_id'])
+    post.reply[create_comment_info['oid']]['reply'].append(child_comment)
     post.save()
-    comment_id = post.id
-    return comment_id
+    return True
 
 
 def create_parent_comment_repository(create_comment_info):
-    post = Comment(content=create_comment_info['content'], create_date=create_comment_info['create_date'], user_id=create_comment_info['user_id'],\
+    comment = Comment(content=create_comment_info['content'], create_date=create_comment_info['create_date'], user_id=create_comment_info['user_id'],\
                 post_id=create_comment_info['post_id'])
+    post = Post.objects.get_or_404(id=create_comment_info['post_id'])
+    comment_id = str(comment.oid)
+    post.reply[comment_id] = comment
     post.save()
-    post.update(parent_comment_id=str(post.id))
-    post.save()
-    print(post.id)
-    comment_id = post.id
     return comment_id
 
 def search_comment_repository(delete_comment_info):
