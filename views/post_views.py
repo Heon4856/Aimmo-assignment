@@ -20,11 +20,12 @@ def create():
 
 @bp.route('/posts/<id>', methods=['GET'])
 def read(id):
+    cookie_value, max_age = post_service.count_hit_post(id, request,"test123457")
     post=post_service.read_post_detail(id)
-    cookie_value, max_age = post_service.hit_post(id, request,"test12345")
     response = make_response(jsonify(post))
     response.set_cookie('hitboard', value = cookie_value, max_age=max_age, httponly=True)
     return response
+
 
 @bp.route('/posts/<id>', methods=['PUT', 'PATCH'])
 def update(id):
@@ -37,3 +38,10 @@ def update(id):
 def delete(id):
     post_service.delete_post_if_user_authorized(id, current_user)
     return make_response('', 204)
+
+
+@bp.route('/lists', methods=['GET'])
+def search():
+    keyword = request.args.get('keyword')
+    post_service.search_keyword(keyword)
+    return "1234"
