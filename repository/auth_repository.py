@@ -2,14 +2,14 @@ from models.models import User
 from werkzeug.security import check_password_hash
 
 
-def signup(username, hashed_password):
-    user = User(username, hashed_password).save()
+def signup(name, hashed_password, signup_date):
+    user = User(name=name, password=hashed_password, signup_date=signup_date).save()
     id = user.id
     return id
 
 
-def login(username, password):
-    user = User.objects(username).first()
-    if user and check_password_hash(user.password, password) :
+def login(name, password):
+    user = User.objects(name=name).first()
+    if user and check_password_hash(user.password, password):
         return user.id
     return False
