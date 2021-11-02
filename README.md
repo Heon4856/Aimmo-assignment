@@ -34,8 +34,8 @@
 ## ENDPOINT 
 | **METHOD** | **ENDPOINT** | **parameter**| **body**   | **수행 목적** |
 |:------|:-------------|:-------------|:-----------------------:|:------------|
-| POST   | /users/signup |         | name, password | 회원가입    |
-| POST   | /users/login  |         | name, password       | 로그인        |
+| POST   | /auth/signup |         | name, password | 회원가입    |
+| POST   | /auth/login  |         | name, password       | 로그인        |
 | POST    | /create |         | title, content      | 게시글 작성 |
 | GET   | /posts        |   page   |                   | 게시글 리스트   |
 | GET    | /posts/<post_id>|   post_id      |             | 게시글 보기 |
