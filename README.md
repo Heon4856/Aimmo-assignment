@@ -59,7 +59,12 @@
 | POST | /posts/<post_id>/comment_create |    | oid | 댓글 생성 |  
 | DELETE | /posts/<post_id> |    |         | 댓글 삭제 |
 
+
 ## API 명세
+
+**0. Postman Test**  
+- https://documenter.getpostman.com/view/17196833/UVBznUh4 클릭 후 Postman에서 실행  
+
 **1. 회원가입**
 
 | **이름**       | **data type**  | **body input** | 
