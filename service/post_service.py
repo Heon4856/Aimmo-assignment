@@ -44,7 +44,7 @@ def count_hit_post(id, request):
 
 
 def search_keyword(keyword, tags):
-    regex = re.compile('.*' + keyword + '*')
+    regex = re.compile('.*' + keyword + '.*')
     return post_repository.search_post(regex, tags)
 
 
