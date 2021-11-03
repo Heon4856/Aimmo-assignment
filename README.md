@@ -297,6 +297,83 @@ python -m unittest
     .
 ]
 ```
+
+**9. 댓글 생성**  
+
+**댓글**
+| **이름**       | **data type**  | **body input**   | 
+|:----------|:--------:|:----------------------------|
+| content | string | "content" : "this is content" | 
+
+**대댓글**
+| **이름**       | **data type**  | **body input**   | 
+|:----------|:--------:|:----------------------------|
+| content | string | "content" : "this is nested content" |
+| oid | string | "oid" : "<Parent comment ID>" |
+
+**SUCCESS EXAMPLE**
+ 
+```
+ - SUCCESS MESSAGE
+[
+ {
+     "id": "<built-in function id>",
+     "msg": "create_comment_success",
+     "status_code": 201
+ }
+]
+ 
+ - POST DETAIL
+{
+    "_id": {
+        "$oid": "61816fc3e74e758d257a15b7"
+    },
+    "title": "test1",
+    "content": "test1",
+    "create_date": {
+        "$date": 1635905107278
+    },
+    "hits": 1,
+    "user": "618143e4fe6f1704c4023b57",
+    "tags": [
+        "test"
+    ],
+    "reply": {
+        "61816fe2e74e758d257a15b8": {
+            "content": "test1",
+            "create_date": {
+                "$date": 1635905138303
+            },
+            "user_id": "618143e4fe6f1704c4023b57",
+            "post_id": "61816fc3e74e758d257a15b7",
+            "oid": {
+                "$oid": "61816fe2e74e758d257a15b8"
+            },
+            "reply": [
+                {
+                    "content": "test1",
+                    "create_date": {
+                        "$date": 1635905385783
+                    },
+                    "user_id": "618143e4fe6f1704c4023b57",
+                    "post_id": "61816fc3e74e758d257a15b7"
+                },
+                {
+                    "content": "test1",
+                    "create_date": {
+                        "$date": 1635905423709
+                    },
+                    "user_id": "618143e4fe6f1704c4023b57",
+                    "post_id": "61816fc3e74e758d257a15b7"
+                }
+            ]
+        },
+    }
+}
+ 
+```
+ 
+
 **ERROR EXAMPLE**
 ```
 # 해당 게시글을 작성한 사용자가 아닐 때
