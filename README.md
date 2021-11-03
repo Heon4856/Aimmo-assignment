@@ -297,6 +297,7 @@ python -m unittest
     .
 ]
 ```
+---
 
 **9. 댓글 생성**  
 
@@ -309,7 +310,7 @@ python -m unittest
 | **이름**       | **data type**  | **body input**   | 
 |:----------|:--------:|:----------------------------|
 | content | string | "content" : "this is nested content" |
-| oid | string | "oid" : "<Parent comment ID>" |
+| oid | string | "oid" : "Parent comment ID" |
 
 **SUCCESS EXAMPLE**
  
