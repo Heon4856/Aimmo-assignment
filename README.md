@@ -35,7 +35,7 @@ python -m unittest
 ## 구현 내용 
 - 게시글 카테고리  
 - 게시글 검색  
-- 대댓글(1 depth), Pagination  
+- 댓글(1 depth), Pagination  
 - 게시글 읽힘 수  
 - Unit Test  
 
@@ -80,7 +80,7 @@ python -m unittest
 - 클라이언트가 파라미터로 검색 키워드를 서버에 보내면 서버는 제목과 키워드가 일치하는 데이터를 찾고 반환합니다.
 - SQL의 like절을 구현하기 위해 키워드에 정규식을 이용했습니다.
 
-#### 대댓글  
+#### 댓글  
 - 댓글을 표현하는 모델인 Comment에 List 형식인 reply 속성을 지정했습니다.
 
 #### 게시글 읽힘 수
@@ -98,8 +98,8 @@ python -m unittest
 | PATCH, PUT  | /posts<post_id> |         | title, content | 게시글 수정     |
 | DELETE | /posts/<post_id> |         |               | 게시글 삭제 |
 | GET | /lists |  keyword  |         | 게시글 검색 |
-| POST | /posts/<post_id>/comment_create |    | oid | 댓글 생성 |  
-| DELETE | /posts/<post_id> |    |         | 댓글 삭제 |
+| POST | /posts/<post_id>/comment_create |    | content, oid | 댓글 생성 |  
+
 
 
 ## API 명세
